@@ -28,6 +28,11 @@ class Book(models.Model):
         blank=True,
     )
 
+    description = models.TextField(
+        verbose_name="Описание",
+        null=True, blank=False,
+    )
+
     def __str__(self):
         return self.name
     

@@ -1,1 +1,1 @@
-from .book import BooksListAPIView
+from .book import BooksListAPIView, BookDetailAPIView
