@@ -19,15 +19,13 @@ class Book(models.Model):
         verbose_name="Автор(ы)"
     )
 
-    publicated_at = models.DateField(
-        verbose_name="Дата публикации",
-        auto_now_add=True,
-    )
+    publicated_date = models.DateField(verbose_name="Дата публикации")
 
     favorite_for = models.ManyToManyField(
         to=User,
         related_name="favorite_book",
-        verbose_name="Избранное у пользователей"
+        verbose_name="Избранное у пользователей",
+        blank=True,
     )
 
     def __str__(self):
