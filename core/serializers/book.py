@@ -6,6 +6,7 @@ from .feedback import FeedbackSerializer
 
 class BooksListSerializer(serializers.HyperlinkedModelSerializer):
     avg_rating = serializers.SerializerMethodField()
+    count_favorite = serializers.SerializerMethodField()
     
     url = serializers.HyperlinkedIdentityField(view_name="core:book-detail")
     genre = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
@@ -13,10 +14,14 @@ class BooksListSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Book
-        fields = ['url', 'id', 'name', 'genre', 'author', 'avg_rating']
+        fields = ['url', 'id', 'name', 'genre', 'author',
+                  'avg_rating', 'count_favorite']
     
     def get_avg_rating(self, book_object):
         return book_object.feedback.aggregate(Avg('rating'))['rating__avg']
+
+    def get_count_favorite(self, book_object):
+        return book_object.favorite_for.count()
 
 
 class BookDetailSerializer(serializers.ModelSerializer):
